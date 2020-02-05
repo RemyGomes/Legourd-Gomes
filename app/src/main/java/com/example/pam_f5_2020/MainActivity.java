@@ -1,6 +1,7 @@
 package com.example.pam_f5_2020;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
@@ -16,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
         MyViewModel model = new ViewModelProvider(this).get(MyViewModel.class);
 
-        String s = "coucou";
+        //String s = "coucou";
         TextView tv = findViewById(R.id.activity_main_TextViw_center);
-        tv.setText(s);
+        tv.setText(MyViewModel.getUsers().get(0).toString());
     }
 }
