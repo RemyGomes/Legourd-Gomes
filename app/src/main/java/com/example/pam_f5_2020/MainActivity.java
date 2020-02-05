@@ -16,9 +16,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         MyViewModel model = new ViewModelProvider(this).get(MyViewModel.class);
+        model.getRandomsCocktails();
 
         //String s = "coucou";
         TextView tv = findViewById(R.id.activity_main_TextViw_center);
-        tv.setText(MyViewModel.getUsers().get(0).toString());
     }
 }
