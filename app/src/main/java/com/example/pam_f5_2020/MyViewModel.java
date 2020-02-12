@@ -18,7 +18,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyViewModel extends ViewModel {
-    private List<Cocktail> cocktails;
+    private CocktailResponse cocktails;
 
     private CocktailService cocktailService;
 
@@ -33,12 +33,12 @@ public class MyViewModel extends ViewModel {
     }
 
     // Crée une liste de cocktails randoms
-    public List<Cocktail> getRandomsCocktails() {
+    public void getRandomsCocktails(CallbackRequestFinished callback) {
         if (cocktails == null) {
-            cocktails = new ArrayList<>();
-            getRandomCocktail();
+            cocktails = new CocktailResponse();
+            getRandomCocktail(callback);
         }
-        return cocktails;
+        callback.onFinish(cocktails);
     }
 
     // Méthodes pour get les cocktails
@@ -52,12 +52,14 @@ public class MyViewModel extends ViewModel {
 
     }
 
-    private void getRandomCocktail() {
+    private void getRandomCocktail(CallbackRequestFinished callback) {
         Call<CocktailResponse> cocktail = cocktailService.randomCocktail();
         cocktail.enqueue(new Callback<CocktailResponse>() {
             @Override
             public void onResponse(Call<CocktailResponse> call, Response<CocktailResponse> response) {
+                cocktails = response.body();
                 Log.d("MyViewModel", response.body().getDrinks().get(0).toString());
+                callback.onFinish(cocktails);
             }
 
             @Override
