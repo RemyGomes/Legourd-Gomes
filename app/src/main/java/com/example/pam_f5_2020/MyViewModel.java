@@ -59,7 +59,7 @@ public class MyViewModel extends ViewModel {
             public void onResponse(Call<CocktailResponse> call, Response<CocktailResponse> response) {
                 cocktails = response.body();
                 Log.d("MyViewModel", response.body().getDrinks().get(0).toString());
-                callback.onFinish(cocktails);
+                callback.onFinish(response.body());
             }
 
             @Override

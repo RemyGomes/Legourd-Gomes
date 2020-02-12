@@ -26,15 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish(CocktailResponse cocktails) {
-                if (cocktails != null) {
+                if (cocktails.getDrinks() != null) {
                     tv.setText("OK");
-                    Log.d("Main", "" + cocktails.getDrinks().size());
+                    Log.d("Main", "" + cocktails.getDrinks().get(0).toString());
                     // Log.d("MainActivity", "" + cocktailList.size());
                 }
             }
         });
-
-        //String s = "coucou";
-
     }
 }
