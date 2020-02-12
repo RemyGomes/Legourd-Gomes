@@ -3,7 +3,9 @@ package com.example.pam_f5_2020.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Cocktail {
+import java.io.Serializable;
+
+public class Cocktail implements Serializable {
 
     @SerializedName("idDrink")
     @Expose

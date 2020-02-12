@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -18,14 +19,15 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CallBackOnClick{
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private ArrayList<Cocktail> drinksNames = new ArrayList<Cocktail>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ArrayList<Cocktail> drinksNames = new ArrayList<Cocktail>();
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -36,8 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
-
+        mAdapter = new CocktailAdapter(this, drinksNames);
 
         MyViewModel model = new ViewModelProvider(this).get(MyViewModel.class);
         model.getRandomsCocktails(new CallbackRequestFinished(){
@@ -51,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                     for(Cocktail c : cocktails.getDrinks()) {
                         drinksNames.add(c);
                     }
-                    mAdapter = new CocktailAdapter(drinksNames);
                     recyclerView.setAdapter(mAdapter);
                 }
             }
@@ -63,7 +63,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
+    }
+    @Override
+    public void onClick(int position) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("data", drinksNames.get(position));
+        startActivity(intent);
     }
 }
