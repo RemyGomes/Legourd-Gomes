@@ -43,28 +43,28 @@ public class MyViewModel extends ViewModel {
 
     // Méthodes pour get les cocktails
 
-    private void getCocktails(String cocktailName) {
-        // Nom de cocktail composé
-        if (cocktailName.contains(" ")) {
-            cocktailName = cocktailName.trim().replaceAll(" ", "%20");
+    private void getCocktails(CallbackRequestFinished callback) {
+        if (cocktails == null) {
+            cocktails = new CocktailResponse();
+            getRandomCocktail(callback);
         }
-        Call<CocktailResponse> cocktails = cocktailService.listCocktails(cocktailName);
+        callback.onFinish(cocktails);
 
     }
 
     private void getRandomCocktail(CallbackRequestFinished callback) {
-        Call<CocktailResponse> cocktail = cocktailService.randomCocktail();
+        Call<CocktailResponse> cocktail = cocktailService.listCocktails();
         cocktail.enqueue(new Callback<CocktailResponse>() {
             @Override
             public void onResponse(Call<CocktailResponse> call, Response<CocktailResponse> response) {
                 cocktails = response.body();
-                Log.d("MyViewModel", response.body().getDrinks().get(0).toString());
+                Log.d("MyViewModel", response.body().getDrinks().get(1).toString());
                 callback.onFinish(response.body());
             }
 
             @Override
             public void onFailure(Call<CocktailResponse> call, Throwable t) {
-
+                callback.onError(t);
             }
         });
     }

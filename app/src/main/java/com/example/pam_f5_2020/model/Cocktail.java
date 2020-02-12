@@ -125,11 +125,23 @@ public class Cocktail {
 
     @Override
     public String toString() {
-        return strDrink + " " + strAlcoholic + " : " + strInstructions;
+        return strDrink + "\n" + strAlcoholic + "\nListe d'ingredients :\n"
+                + isNull(strIngredient1) + " " + isNull(strMeasure1) +"\n"
+                + isNull(strIngredient2) + " " + isNull(strMeasure2) +"\n"
+                + isNull(strIngredient3) + " " + isNull(strMeasure3) +"\n"
+                + isNull(strIngredient4) + " " + isNull(strMeasure4) +"\n"
+                + isNull(strIngredient5) + " " + isNull(strMeasure5) +"\n"
+                +"Instructions : " + strInstructions;
     }
 
-
-
+    public String isNull(Object s) {
+        if ( s == null)
+        {
+            return "";
+        } else {
+            return s.toString();
+        }
+    }
 
     public String getIdDrink() {
         return idDrink;

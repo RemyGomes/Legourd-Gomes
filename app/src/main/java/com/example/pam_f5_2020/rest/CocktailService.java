@@ -10,8 +10,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface CocktailService {
-    @GET("search.php?s={cocktailName}")
-    Call<CocktailResponse> listCocktails(@Path("cocktailName") String cocktailName);
+    @GET("search.php?s=")
+    Call<CocktailResponse> listCocktails();
 
     @GET("random.php")
     Call<CocktailResponse> randomCocktail();
