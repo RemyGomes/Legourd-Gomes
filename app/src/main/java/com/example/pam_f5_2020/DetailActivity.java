@@ -15,18 +15,58 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.cocktail_detail_layout);
-        TextView tv = findViewById(R.id.detail);
         ImageView iv = findViewById(R.id.imageViewCocktail);
-
+        TextView cocktailName = findViewById(R.id.CocktailName);
+        TextView isAlcoholic = findViewById(R.id.isAlcoholic);
+        TextView cocktailIngredients = findViewById(R.id.CocktailIngredients);
+        TextView cocktailIngredientsTitre = findViewById(R.id.CocktailIngredientsTitre);
+        TextView instructions = findViewById(R.id.Instructions);
         Intent startingIntent = getIntent();
         Cocktail cocktail = (Cocktail) startingIntent.getSerializableExtra("data");
 
-        tv.setText(cocktail.toString());
+
+        // Cocktail name
+        cocktailName.setText(cocktail.getStrDrink());
+        // Is Alcohocic
+        isAlcoholic.setText("\tAlcoholic: \t\t" + getEmoji((cocktail.isAlcoholic())));
+
+        cocktailIngredientsTitre.setText("\tIngredients:");
+
+        // Ingredients
+        try {
+            cocktailIngredients.setText(cocktail.getIngredients());
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        // Instructions
+        instructions.setText("Instructions : " + cocktail.getStrInstructions());
 
         Picasso.get()
                 .load(cocktail.getStrDrinkThumb())
                 .transform(new CircleTransform(500,50))
                 .into(iv);
 
+    }
+
+    public String getEmoji(int code) {
+        String emoji;
+        switch (code) {
+            case -1:
+                emoji = new String(Character.toChars(0x1F44D));
+                break;
+            case 0:
+                emoji = new String(Character.toChars(0x1F44D)) + new String(Character.toChars(0x1F44E));
+                break;
+            case 1:
+                emoji = new String(Character.toChars(0x1F44E));
+                break;
+            default:
+                emoji = new String(Character.toChars(0x2754));
+                break;
+        }
+        return emoji;
     }
 }

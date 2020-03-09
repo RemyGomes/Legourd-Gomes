@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Cocktail implements Serializable {
 
@@ -128,12 +130,52 @@ public class Cocktail implements Serializable {
     @Override
     public String toString() {
         return strDrink + "\n" + strAlcoholic + "\nListe d'ingredients :\n"
-                + "\t\t" + isNull(strIngredient1) + " " + isNull(strMeasure1) +"\n"
-                + "\t\t" + isNull(strIngredient2) + " " + isNull(strMeasure2) +"\n"
-                + "\t\t" + isNull(strIngredient3) + " " + isNull(strMeasure3) +"\n"
-                + "\t\t" + isNull(strIngredient4) + " " + isNull(strMeasure4) +"\n"
-                + "\t\t" + isNull(strIngredient5) + " " + isNull(strMeasure5) +"\n"
+                + "\t\t\t" + isNull(strIngredient1) + " " + isNull(strMeasure1) +"\n"
+                + "\t\t\t" + isNull(strIngredient2) + " " + isNull(strMeasure2) +"\n"
+                + "\t\t\t" + isNull(strIngredient3) + " " + isNull(strMeasure3) +"\n"
+                + "\t\t\t" + isNull(strIngredient4) + " " + isNull(strMeasure4) +"\n"
+                + "\t\t\t" + isNull(strIngredient5) + " " + isNull(strMeasure5) +"\n"
                 +"Instructions : " + "\t" + strInstructions;
+    }
+
+    public String getIngredients() throws NoSuchFieldException, IllegalAccessException {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // List of ingredients
+        ArrayList<String> listOfIngredients = new ArrayList<>();
+        ArrayList<String> listOfMeasure = new ArrayList<>();
+
+        String field = "strIngredient";
+        int i = 1;
+        Object object = this.getClass().getDeclaredField(field + i).get(this);
+
+        while (object != null) {
+            listOfIngredients.add((String) object);
+            i++;
+            object = this.getClass().getDeclaredField(field + i).get(this);
+        }
+
+        field = "strMeasure";
+        i = 1;
+        object = this.getClass().getDeclaredField(field + i).get(this);
+        while (object != null) {
+            listOfMeasure.add((String) object);
+            i++;
+            object = this.getClass().getDeclaredField(field + i).get(this);
+        }
+
+        i = 0;
+        String ingredient;
+        String measure;
+
+        while (listOfIngredients.size() > i && listOfMeasure.size() > i) {
+            ingredient = listOfIngredients.get(i);
+            measure = listOfMeasure.get(i);
+            stringBuilder.append(ingredient).append(" -> ").append(measure).append("\n");
+            i++;
+
+        }
+        return stringBuilder.toString();
     }
 
     public String isNull(Object s) {
@@ -143,6 +185,10 @@ public class Cocktail implements Serializable {
         } else {
             return s.toString();
         }
+    }
+
+    public int isAlcoholic() {
+        return strAlcoholic=="Alcoholic" ? 1 : (strAlcoholic=="Optional Alcohol" ? 0 : -1);
     }
 
     public String getIdDrink() {
