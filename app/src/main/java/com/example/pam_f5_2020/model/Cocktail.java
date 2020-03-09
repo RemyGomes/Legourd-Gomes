@@ -128,12 +128,12 @@ public class Cocktail implements Serializable {
     @Override
     public String toString() {
         return strDrink + "\n" + strAlcoholic + "\nListe d'ingredients :\n"
-                + isNull(strIngredient1) + " " + isNull(strMeasure1) +"\n"
-                + isNull(strIngredient2) + " " + isNull(strMeasure2) +"\n"
-                + isNull(strIngredient3) + " " + isNull(strMeasure3) +"\n"
-                + isNull(strIngredient4) + " " + isNull(strMeasure4) +"\n"
-                + isNull(strIngredient5) + " " + isNull(strMeasure5) +"\n"
-                +"Instructions : " + strInstructions;
+                + "\t\t" + isNull(strIngredient1) + " " + isNull(strMeasure1) +"\n"
+                + "\t\t" + isNull(strIngredient2) + " " + isNull(strMeasure2) +"\n"
+                + "\t\t" + isNull(strIngredient3) + " " + isNull(strMeasure3) +"\n"
+                + "\t\t" + isNull(strIngredient4) + " " + isNull(strMeasure4) +"\n"
+                + "\t\t" + isNull(strIngredient5) + " " + isNull(strMeasure5) +"\n"
+                +"Instructions : " + "\t" + strInstructions;
     }
 
     public String isNull(Object s) {
