@@ -8,6 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:background="#F80303" />
+        android:background="#FFFFFF"
+        android:lineSpacingExtra="8sp"
+        android:textAlignment="center"
+        android:textSize="30sp" />
 
 </LinearLayout>
